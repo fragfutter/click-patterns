@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+import logging
+
+import click
+
+from click_logging import LoggingGroup, PADDED_FORMAT
+
+"""
+## a click group class that adds global logging setup
+
+add the flags --debug, --quiet to the command group
+and initialize logging from it.
+
+also these flags can specified behind each subcommand
+"""
+
+def logtest(name):
+    for level in ('debug', 'info', 'warning', 'error'):
+        getattr(logging, level)(f'this is {name} on level {level}')
+
+@click.group(cls=LoggingGroup, color=True, critical_terminate=True, fmt=PADDED_FORMAT)
+def cli():
+    logtest('cli')
+
+@cli.command()
+def cmd1():
+    logtest('cmd1')
+    logging.critical('terminate after this!')
+    click.echo('this will never show')
+
+if __name__ == '__main__':
+    cli()
