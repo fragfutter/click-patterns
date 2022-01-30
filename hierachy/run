@@ -1,17 +1,9 @@
 #!/usr/bin/python3
 
 import sys
-import click
+sys.path.append('.')
 
-from click_hierachy import collect_commands
-
-@click.group()
-def cli():
-    pass
-
-current_module = sys.modules[__name__]
-import cmds
-collect_commands(cli, cmds)
+from my_package import cli
 
 if __name__ == '__main__':
     cli()

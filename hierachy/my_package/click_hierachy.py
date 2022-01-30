@@ -52,9 +52,11 @@ def collect_commands(parent=None, namespace=None, recursive=True):
         a fresh created one.
     """
     if namespace is None:
-        namespace = sys.modules[__name__]
+        module = sys.modules[__name__]
+        package_name = module.__package__
+        namespace = importlib.import_module(package_name)
     if parent is None:
-        parent = click.Command(__name__.split('.')[-1])
+        parent = click.Group(__name__.split('.')[-1])
     for _, name, ispkg in pkgutil.iter_modules(namespace.__path__, f'{namespace.__name__}.'):
         module = importlib.import_module(name)
         groups = list(members(module, click.Group))

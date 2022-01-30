@@ -1,5 +1,12 @@
 import click
 
+"""
+don't define any group. collect will automaticly create one for us.
+
+but commands defined here are unreachable, we don't autocollect commands
+from __init__
+"""
+
 # a default click.group will be created
 # and all commands in this module will be added
 
@@ -7,4 +14,3 @@ import click
 @click.command()
 def unreachable():
     pass
-
